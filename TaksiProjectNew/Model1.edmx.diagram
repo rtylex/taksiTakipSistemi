@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="313b1900524a4a86b618216b0edd7fc9" Name="Diagram1">
+        <EntityTypeShape EntityType="TaksiTakipModel.ARACLAR" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaksiTakipModel.CAGRILAR" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaksiTakipModel.MUSTERILER" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaksiTakipModel.SOFORLER" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TaksiTakipModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="TaksiTakipModel.FK_CAGRILAR_ARACLAR" ManuallyRouted="false" />
+        <AssociationConnector Association="TaksiTakipModel.FK_CAGRILAR_MUSTERILER" ManuallyRouted="false" />
+        <AssociationConnector Association="TaksiTakipModel.FK_CAGRILAR_SOFORLER" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TaksiTakipModel.ADMIN" Width="1.5" PointX="5.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

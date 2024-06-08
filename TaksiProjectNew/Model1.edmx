@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TaksiTakipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ADMIN">
+          <Key>
+            <PropertyRef Name="ADMINID" />
+          </Key>
+          <Property Name="ADMINID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EPOSTA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SIFRE" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ARACLAR">
+          <Key>
+            <PropertyRef Name="ARACID" />
+          </Key>
+          <Property Name="ARACID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PLAKA" Type="varchar" MaxLength="10" />
+          <Property Name="ARACSAHIBI" Type="nvarchar" MaxLength="50" />
+          <Property Name="ARACSAHIBITELEFON" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="ACIKLAMA" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CAGRILAR">
+          <Key>
+            <PropertyRef Name="CAGRIID" />
+          </Key>
+          <Property Name="CAGRIID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TARİHSAAT" Type="datetime" />
+          <Property Name="MUSTERID" Type="int" />
+          <Property Name="ARACID" Type="int" />
+          <Property Name="SOFORID" Type="int" />
+          <Property Name="NOT" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MUSTERILER">
+          <Key>
+            <PropertyRef Name="MUSTERIID" />
+          </Key>
+          <Property Name="MUSTERIID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ADISOYADI" Type="nvarchar" MaxLength="50" />
+          <Property Name="ADRES" Type="nvarchar" MaxLength="50" />
+          <Property Name="ADRESTARİF" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TELEFON" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SOFORLER">
+          <Key>
+            <PropertyRef Name="SOFORID" />
+          </Key>
+          <Property Name="SOFORID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ADISOYADI" Type="nvarchar" MaxLength="50" />
+          <Property Name="TELEFON" Type="varchar" MaxLength="50" />
+          <Property Name="CALISMADURUMU" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_CAGRILAR_ARACLAR">
+          <End Role="ARACLAR" Type="Self.ARACLAR" Multiplicity="0..1" />
+          <End Role="CAGRILAR" Type="Self.CAGRILAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ARACLAR">
+              <PropertyRef Name="ARACID" />
+            </Principal>
+            <Dependent Role="CAGRILAR">
+              <PropertyRef Name="ARACID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAGRILAR_MUSTERILER">
+          <End Role="MUSTERILER" Type="Self.MUSTERILER" Multiplicity="0..1" />
+          <End Role="CAGRILAR" Type="Self.CAGRILAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUSTERILER">
+              <PropertyRef Name="MUSTERIID" />
+            </Principal>
+            <Dependent Role="CAGRILAR">
+              <PropertyRef Name="MUSTERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAGRILAR_SOFORLER">
+          <End Role="SOFORLER" Type="Self.SOFORLER" Multiplicity="0..1" />
+          <End Role="CAGRILAR" Type="Self.CAGRILAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOFORLER">
+              <PropertyRef Name="SOFORID" />
+            </Principal>
+            <Dependent Role="CAGRILAR">
+              <PropertyRef Name="SOFORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TaksiTakipModelStoreContainer">
+          <EntitySet Name="ADMIN" EntityType="Self.ADMIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ARACLAR" EntityType="Self.ARACLAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAGRILAR" EntityType="Self.CAGRILAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MUSTERILER" EntityType="Self.MUSTERILER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SOFORLER" EntityType="Self.SOFORLER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CAGRILAR_ARACLAR" Association="Self.FK_CAGRILAR_ARACLAR">
+            <End Role="ARACLAR" EntitySet="ARACLAR" />
+            <End Role="CAGRILAR" EntitySet="CAGRILAR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAGRILAR_MUSTERILER" Association="Self.FK_CAGRILAR_MUSTERILER">
+            <End Role="MUSTERILER" EntitySet="MUSTERILER" />
+            <End Role="CAGRILAR" EntitySet="CAGRILAR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAGRILAR_SOFORLER" Association="Self.FK_CAGRILAR_SOFORLER">
+            <End Role="SOFORLER" EntitySet="SOFORLER" />
+            <End Role="CAGRILAR" EntitySet="CAGRILAR" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TaksiTakipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ARACLAR">
+          <Key>
+            <PropertyRef Name="ARACID" />
+          </Key>
+          <Property Name="ARACID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PLAKA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ARACSAHIBI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ARACSAHIBITELEFON" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="ACIKLAMA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CAGRILAR" Relationship="Self.FK_CAGRILAR_ARACLAR" FromRole="ARACLAR" ToRole="CAGRILAR" />
+        </EntityType>
+        <EntityType Name="CAGRILAR">
+          <Key>
+            <PropertyRef Name="CAGRIID" />
+          </Key>
+          <Property Name="CAGRIID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TARİHSAAT" Type="DateTime" Precision="3" />
+          <Property Name="MUSTERID" Type="Int32" />
+          <Property Name="ARACID" Type="Int32" />
+          <Property Name="SOFORID" Type="Int32" />
+          <Property Name="NOT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ARACLAR" Relationship="Self.FK_CAGRILAR_ARACLAR" FromRole="CAGRILAR" ToRole="ARACLAR" />
+          <NavigationProperty Name="MUSTERILER" Relationship="Self.FK_CAGRILAR_MUSTERILER" FromRole="CAGRILAR" ToRole="MUSTERILER" />
+          <NavigationProperty Name="SOFORLER" Relationship="Self.FK_CAGRILAR_SOFORLER" FromRole="CAGRILAR" ToRole="SOFORLER" />
+        </EntityType>
+        <EntityType Name="MUSTERILER">
+          <Key>
+            <PropertyRef Name="MUSTERIID" />
+          </Key>
+          <Property Name="MUSTERIID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ADISOYADI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ADRES" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ADRESTARİF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TELEFON" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CAGRILAR" Relationship="Self.FK_CAGRILAR_MUSTERILER" FromRole="MUSTERILER" ToRole="CAGRILAR" />
+        </EntityType>
+        <EntityType Name="SOFORLER">
+          <Key>
+            <PropertyRef Name="SOFORID" />
+          </Key>
+          <Property Name="SOFORID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ADISOYADI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TELEFON" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAGRILAR" Relationship="Self.FK_CAGRILAR_SOFORLER" FromRole="SOFORLER" ToRole="CAGRILAR" />
+          <Property Name="CALISMADURUMU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_CAGRILAR_ARACLAR">
+          <End Role="ARACLAR" Type="Self.ARACLAR" Multiplicity="0..1" />
+          <End Role="CAGRILAR" Type="Self.CAGRILAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ARACLAR">
+              <PropertyRef Name="ARACID" />
+            </Principal>
+            <Dependent Role="CAGRILAR">
+              <PropertyRef Name="ARACID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAGRILAR_MUSTERILER">
+          <End Role="MUSTERILER" Type="Self.MUSTERILER" Multiplicity="0..1" />
+          <End Role="CAGRILAR" Type="Self.CAGRILAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUSTERILER">
+              <PropertyRef Name="MUSTERIID" />
+            </Principal>
+            <Dependent Role="CAGRILAR">
+              <PropertyRef Name="MUSTERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAGRILAR_SOFORLER">
+          <End Role="SOFORLER" Type="Self.SOFORLER" Multiplicity="0..1" />
+          <End Role="CAGRILAR" Type="Self.CAGRILAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOFORLER">
+              <PropertyRef Name="SOFORID" />
+            </Principal>
+            <Dependent Role="CAGRILAR">
+              <PropertyRef Name="SOFORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TaksiTakipEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ARACLAR" EntityType="Self.ARACLAR" />
+          <EntitySet Name="CAGRILAR" EntityType="Self.CAGRILAR" />
+          <EntitySet Name="MUSTERILER" EntityType="Self.MUSTERILER" />
+          <EntitySet Name="SOFORLER" EntityType="Self.SOFORLER" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_CAGRILAR_ARACLAR" Association="Self.FK_CAGRILAR_ARACLAR">
+            <End Role="ARACLAR" EntitySet="ARACLAR" />
+            <End Role="CAGRILAR" EntitySet="CAGRILAR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAGRILAR_MUSTERILER" Association="Self.FK_CAGRILAR_MUSTERILER">
+            <End Role="MUSTERILER" EntitySet="MUSTERILER" />
+            <End Role="CAGRILAR" EntitySet="CAGRILAR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAGRILAR_SOFORLER" Association="Self.FK_CAGRILAR_SOFORLER">
+            <End Role="SOFORLER" EntitySet="SOFORLER" />
+            <End Role="CAGRILAR" EntitySet="CAGRILAR" />
+          </AssociationSet>
+          <EntitySet Name="ADMIN" EntityType="TaksiTakipModel.ADMIN" />
+        </EntityContainer>
+        <EntityType Name="ADMIN">
+          <Key>
+            <PropertyRef Name="ADMINID" />
+          </Key>
+          <Property Name="ADMINID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EPOSTA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SIFRE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TaksiTakipModelStoreContainer" CdmEntityContainer="TaksiTakipEntities">
+          <EntitySetMapping Name="ARACLAR">
+            <EntityTypeMapping TypeName="TaksiTakipModel.ARACLAR">
+              <MappingFragment StoreEntitySet="ARACLAR">
+                <ScalarProperty Name="ARACID" ColumnName="ARACID" />
+                <ScalarProperty Name="PLAKA" ColumnName="PLAKA" />
+                <ScalarProperty Name="ARACSAHIBI" ColumnName="ARACSAHIBI" />
+                <ScalarProperty Name="ARACSAHIBITELEFON" ColumnName="ARACSAHIBITELEFON" />
+                <ScalarProperty Name="ACIKLAMA" ColumnName="ACIKLAMA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAGRILAR">
+            <EntityTypeMapping TypeName="TaksiTakipModel.CAGRILAR">
+              <MappingFragment StoreEntitySet="CAGRILAR">
+                <ScalarProperty Name="CAGRIID" ColumnName="CAGRIID" />
+                <ScalarProperty Name="TARİHSAAT" ColumnName="TARİHSAAT" />
+                <ScalarProperty Name="MUSTERID" ColumnName="MUSTERID" />
+                <ScalarProperty Name="ARACID" ColumnName="ARACID" />
+                <ScalarProperty Name="SOFORID" ColumnName="SOFORID" />
+                <ScalarProperty Name="NOT" ColumnName="NOT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MUSTERILER">
+            <EntityTypeMapping TypeName="TaksiTakipModel.MUSTERILER">
+              <MappingFragment StoreEntitySet="MUSTERILER">
+                <ScalarProperty Name="MUSTERIID" ColumnName="MUSTERIID" />
+                <ScalarProperty Name="ADISOYADI" ColumnName="ADISOYADI" />
+                <ScalarProperty Name="ADRES" ColumnName="ADRES" />
+                <ScalarProperty Name="ADRESTARİF" ColumnName="ADRESTARİF" />
+                <ScalarProperty Name="TELEFON" ColumnName="TELEFON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SOFORLER">
+            <EntityTypeMapping TypeName="TaksiTakipModel.SOFORLER">
+              <MappingFragment StoreEntitySet="SOFORLER">
+                <ScalarProperty Name="CALISMADURUMU" ColumnName="CALISMADURUMU" />
+                <ScalarProperty Name="SOFORID" ColumnName="SOFORID" />
+                <ScalarProperty Name="ADISOYADI" ColumnName="ADISOYADI" />
+                <ScalarProperty Name="TELEFON" ColumnName="TELEFON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TaksiTakipModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADMIN">
+            <EntityTypeMapping TypeName="TaksiTakipModel.ADMIN">
+              <MappingFragment StoreEntitySet="ADMIN">
+                <ScalarProperty Name="SIFRE" ColumnName="SIFRE" />
+                <ScalarProperty Name="EPOSTA" ColumnName="EPOSTA" />
+                <ScalarProperty Name="ADMINID" ColumnName="ADMINID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
